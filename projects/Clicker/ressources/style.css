@@ -1,0 +1,136 @@
+
+button{
+    outline: none;
+    border: none;
+    border-radius: 5px;
+}
+
+#shopt{
+    border: 3mm ridge;
+    position: relative;
+    margin:5% auto 0;
+    margin-bottom: 1%;
+    width: 90%;
+}
+
+#clickergame {
+    border: 4mm ridge;
+}
+
+#dc, #escl, #stag, #fou, #mach, #mult, #surv, #tech, #mouse, #ai, #newgen{
+    font-weight: bold;
+    color: black;
+    text-shadow:
+    1px 1px 0 white,
+    -1px 1px 0 white,
+    -1px -1px 0 white,
+    1px -1px 0 white;
+    height:50px;
+    width: 50px;
+}
+
+#esclcontainer, #stagcontainer, #dccontainer, #foucontainer, #machcontainer, #multcontainer, #survcontainer, #techcontainer, #mousecontainer, #aicontainer, #newgencontainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#clickerb{
+    text-align: center;
+}
+
+#escl{
+    background: url('Pdp V2 Z.png');
+}
+
+#stag{
+    background: url('stagiaire.png');
+}
+
+#fou{
+    background: url('fou.png');
+}
+
+#dc{
+    background: url('mouse.png');
+}
+
+#mach{
+    background: url('mach.png');
+    background-size: contain;
+}
+
+#newgen{
+    background: url('newgen.png');
+    background-size: contain;
+}
+
+#mult{
+    background: url('mult.png');
+    background-size: contain;
+}
+
+#surv{
+    background: url('surv.png');
+    background-size: contain;
+}
+
+#tech{
+    background: url('tech.png');
+    background-size: contain;
+}
+
+#mouse{
+    background: url('pointing\ device.png');
+    background-size: contain;
+}
+
+#ai{
+    background: url('ai.png');
+    background-size: contain;
+}
+
+
+#clickerbutton{
+    background: url('Pdp v2.png');
+    height:140px;
+    width:140px;
+}
+
+#boutik{
+    text-align: center;
+    vertical-align: middle;
+}
+
+#shop{
+    display: flex;
+    flex-direction: row;
+}
+
+#buildings{
+    border: 2mm ridge;
+    position: relative;
+    margin:5% auto 0;
+    right:2%;
+    margin-bottom: 1%;
+    width: 40%;
+    padding: 0.5%;
+}
+
+#upgrades{
+    border: 2mm ridge;
+    position: relative;
+    margin:5% auto 0;
+    margin-bottom: 1%;
+    left:2%;
+    width: 40%;
+    padding: 0.5%;
+}
+
+#uptitle, #buildtitle {
+    text-align: center;
+}
+
+#clicker{
+    text-align: center;
+}

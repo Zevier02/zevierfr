@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <link rel="icon" type="image/png" sizes="16x16" href="../../images/logo.png">
+        <link rel="stylesheet" href="../../ressources/style.css?v=1.4">
+        <link rel="stylesheet" href="ressources/style.css?v=2.0">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Zevier</title>
+        <script>console.info("T'utilises inspecter sérieux ?");</script>
+    </head>
+    <body>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>./<img src="../../images/boldlogo.png" title="Z" style="height: 1em; vertical-align: -0.15em;">evier</h1>
+            <div style="display: flex; align-items: center; gap: 1em;">
+                <a href="../../">Back</a>
+                <img src="../../images/logo.png" title="logo" style="height: 5em;">
+            </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <p style="height: 1em; vertical-align: -0.15em;">The circle is attracted by your cursor if it is in the box. If your cursor is not in the box, then the circle is in a physics simulation.<br>Doesn't work on mobile.</p>
+            <div style="display: flex; align-items: center; gap: 1em;">
+                <p>FPS : <span id="fps">60</span></p>
+            </div>
+        </div>
+        <div id="sim">
+            <canvas id="canvas1" width="200" height="200"></canvas>
+        </div>
+        <h3>Simulation settings :</h3>
+        <div id="controls">
+            <div class="column">
+                <div class="control">
+                    <label for="gravity">Gravity :</label>
+                    <input oninput="getValue('gravity')" type="number" value="9.81" id="gravity">
+                </div>
+                <div class="control">
+                    <label for="air">Air Resistance :</label>
+                    <input oninput="getValue('air')" type="number" value="0.002" id="air">
+                </div>
+                <div class="control">
+                    <label for="b">Coefficient of restitution (bounce) :</label>
+                    <input oninput="getValue('b')" type="number" value="0.9" id="b">
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="control">
+                    <label for="rad">Radius :</label>
+                    <input oninput="getValue('rad')" type="number" value="10" id="rad">
+                </div>
+                <div class="control">
+                    <label for="mousex">Mouse Attraction Force X :</label>
+                    <input oninput="getValue('mousex')" type="number" value="2" id="mousex">
+                </div>
+                <div class="control">
+                    <label for="mousey">Mouse Attraction Force Y :</label>
+                    <input oninput="getValue('mousey')" type="number" value="2" id="mousey">
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="control">
+                    <label for="fr">Max Frame Rate :</label>
+                    <input oninput="getValue('fr')" type="number" value="60" id="fr">
+                </div>
+                <div class="control">
+                    <label for="sp">Simulation Speed :</label>
+                    <input oninput="getValue('sp')" type="number" value="1" id="sp">
+                </div>
+                <!-- <div class="control">
+                    <label for="force">See Forces :</label>
+                    <input oninput="getValue('force')" type="checkbox" id="force">
+                </div> -->
+                <div class="control">
+                    <button onclick="reset()">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOUTON POUR MASQUER / AFFICHER LE CHAT -->
+        <button onclick="toggleChat()" id="toggleChat" style="background-color: grey;">Masquer le chat</button>
+        <div class="chatbox" id="chatbox" style="height: 45%;">
+            <div class="chattitle" id="chattitle">
+                <p>Discussion en direct</p>
+            </div>
+            <div class="chatcontent" id="chatcontent" style="padding: 3px;">
+                <p><span id="chat"></span></p>
+            </div>
+            <div class="chatinput" id="chatinput">
+                <input
+                    type="text"
+                    id="author"
+                    class="messageinput"
+                    required
+                    minlength="1"
+                    maxlength="16"
+                    placeholder="Pseudo"
+                    size="8"
+                />
+                <input
+                    type="text"
+                    id="content"
+                    class="messageinput"
+                    required
+                    minlength="1"
+                    maxlength="200"
+                    placeholder="Message"
+                    size="20"
+                />
+                <button onclick="sendmessage()" class="sendbutton">Envoyer</button>
+                <p><span id="chaterror"></span></p>
+            </div>
+            <script src="../../scripts/socketio.js"></script>
+            <script src="../../scripts/toggleChat.js?v=0.2"></script>
+            <script src="../../scripts/chat.js?v=1.8"></script>
+        </div>
+        <script src="scripts/physics.js?v=0.221"></script>
+    </body>
+</html>

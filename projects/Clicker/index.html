@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <link rel="icon" type="image/png" sizes="16x16" href="../../images/logo.png">
+        <link rel="stylesheet" href="ressources/style.css?v=3.3">
+        <link rel="stylesheet" href="../../ressources/style.css?v=1.4">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Zevier</title>
+        <script>console.info("T'utilises inspecter sérieux ?");</script>
+    </head>
+    <body>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>./<img src="../../images/boldlogo.png" title="Z" style="height: 1em; vertical-align: -0.15em;">evier</h1>
+            <div style="display: flex; align-items: center; gap: 1em;">
+                <a href="../../">Back</a>
+                <img src="../../images/logo.png" title="logo" style="height: 5em;">
+            </div>
+        </div>
+        <div id="clickergame">
+        <div id="clicker">
+            <h2>Voici un jeu idle clicker :</h2>
+        </div>
+        <h3 style="text-align: center;">Z : <span id="clickernb">0</span> (+<span id="clickernbs">0</span>/s)</h3>
+        <div id="clickerb">
+            <button id="clickerbutton" onclick="Clicker()"></button>
+        </div>
+        <br>
+        <div id="shopt">
+            <h2 id="boutik">Boutique</h2>
+                <div id="shop">
+                    <div id="buildings">
+                        <h3 id="buildtitle">Constructions</h3>
+                        <div id="esclcontainer" onclick="Buy('escl', 'items')">
+                            <button  id="escl"><span id="esclco">10</span></button>
+                            <label for="escl">Acheter un escl- employé (+<span id="gescl">0.1</span> Z/s)<br>Possédé : <span id="pescl">0</span></label>
+                        </div>
+                        <div id="stagcontainer" onclick="Buy('stag', 'items')">
+                            <button  id="stag"><span id="stagco">100</span></button>
+                            <label for="stag">Acheter un stagiaire (+<span id="gstag">0.5</span> Z/s)<br>Possédé : <span id="pstag">0</span></label>
+                        </div>
+                        <div id="machcontainer" onclick="Buy('mach', 'items')">
+                            <button  id="mach"><span id="machco">1.250K</span></button>
+                            <label for="mach">Acheter une machine (+<span id="gmach">5</span> Z/s)<br>Possédé : <span id="pmach">0</span></label>
+                        </div>
+                        <div id="newgencontainer" onclick="Buy('newgen', 'items')">
+                            <button  id="newgen"><span id="newgenco">72.700K</span></button>
+                            <label for="newgen">Acheter un employé nouvelle génération™ (+<span id="gnewgen">34</span> Z/s)<br>Possédé : <span id="pnewgen">0</span></label>
+                        </div>
+                    </div>
+                    <div id="upgrades">
+                        <h3 id="uptitle">Améliorations</h3>
+                        <div id="dccontainer" onclick="Buy('dc', 'upgrades')" style="display:block">
+                            <button id="dc"><span id="dcco">100</span></button>
+                            <label for="dc" id="dcl">Acheter une super-souris (+1 Z/clic)</label>
+                        </div>
+                        <div id="multcontainer" onclick="Buy('mult', 'upgrades')" style="display:none">
+                            <button id="mult"><span id="multco">1200</span></button>
+                            <label for="mult" id="multl">Acheter une deuxième souris (×2 Z/clic)</label>
+                        </div>
+                        <div id="mousecontainer" onclick="Buy('mouse', 'upgrades')" style="display:none">
+                            <button id="mouse"><span id="mouseco">200K</span></button>
+                            <label for="mouse" id="mousel">Acheter une souris (l'animal) (+1% de vos Z/s par clic)</label>
+                        </div>
+                        <div id="foucontainer" onclick="Buy('fou', 'upgrades')" style="display:none">
+                            <button id="fou"><span id="fouco">500</span></button>
+                            <label for="fou" id="foul">Acheter un foue- une augmentation (+0.1 Z/s par escl- employé)</label>
+                        </div>
+                        <div id="survcontainer" onclick="Buy('surv', 'upgrades')" style="display:none">
+                            <button id="surv"><span id="survco">2000</span></button>
+                            <label for="surv" id="survl">Acheter un surveilla- un accompagnateur personnalisé (+0.5 Z/s par stagiaire)</label>
+                        </div>
+                        <div id="techcontainer" onclick="Buy('tech', 'upgrades')" style="display:none">
+                            <button id="tech"><span id="techco">60K</span></button>
+                            <label for="tech" id="techl">Acheter un technicien sous-pay- très qualifié (+5 Z/s par machine)</label>
+                        </div>
+                        <div id="aicontainer" onclick="Buy('ai', 'upgrades')" style="display:none">
+                            <button id="ai"><span id="aico">1.3M</span></button>
+                            <label for="ai" id="ail">Acheter le nouveau modèle d'IA générative (+34 Z/s par employé nouvelle génération™)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOUTON POUR MASQUER / AFFICHER LE CHAT -->
+        <button onclick="toggleChat()" id="toggleChat" style="background-color: grey;">Masquer le chat</button>
+        <div class="chatbox" id="chatbox" style="height: 45%;">
+            <div class="chattitle" id="chattitle">
+                <p>Discussion en direct</p>
+            </div>
+            <div class="chatcontent" id="chatcontent" style="padding: 3px;">
+                <p><span id="chat"></span></p>
+            </div>
+            <div class="chatinput" id="chatinput">
+                <input
+                    type="text"
+                    id="author"
+                    class="messageinput"
+                    required
+                    minlength="1"
+                    maxlength="16"
+                    placeholder="Pseudo"
+                    size="8"
+                />
+                <input
+                    type="text"
+                    id="content"
+                    class="messageinput"
+                    required
+                    minlength="1"
+                    maxlength="200"
+                    placeholder="Message"
+                    size="20"
+                />
+                <button onclick="sendmessage()" class="sendbutton">Envoyer</button>
+                <p><span id="chaterror"></span></p>
+            </div>
+            <script src="../../scripts/socketio.js"></script>
+            <script src="../../scripts/toggleChat.js?v=0.2"></script>
+            <script src="../../scripts/chat.js?v=1.8"></script>
+        </div>
+        <script src="scripts/decimal.js"></script>
+        <script src="scripts/clicker.js?v=4.95"></script>
+    </body>
+</html>

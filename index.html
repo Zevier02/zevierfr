@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <link rel="icon" type="image/png" sizes="16x16" href="images/logo.png">
+        <link rel="stylesheet" href="ressources/style.css?v=1.4">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Zevier</title>
+        <script>console.log("T'utilises inspecter sérieux ?");</script>
+    </head>
+    <body>
+        <h1>./<img src="images/boldlogo.png?v=1" title="Z" style="height: 1em; vertical-align: -0.15em;">evier</h1>
+        <h2>Projets :</h2>
+        <div style="
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1em;
+        margin-top: 2em;
+        ">
+        <a href="projects/Clicker" style="text-align: center; text-decoration: none; color: inherit;">
+            Clicker<br>
+            <img src="projects/Clicker/logo.png" title="Clicker" style="height: 15em; display: block; margin: 0 auto;">
+        </a>
+        <a href="projects/Physics Simulation/" style="text-align: center; text-decoration: none; color: inherit;">
+            Physics Simulation<br>
+            <img src="projects/Physics Simulation/logo.png?v=1" title="Clicker" style="height: 15em; display: block; margin: 0 auto;">
+        </a>
+        </div>
+
+	    <!-- BOUTON POUR MASQUER / AFFICHER LE CHAT -->
+        <button onclick="toggleChat()" id="toggleChat" style="background-color: grey;">Masquer le chat</button>
+        <div class="chatbox" id="chatbox" style="height: 45%;">
+            <div class="chattitle" id="chattitle">
+                <p>Discussion en direct</p>
+            </div>
+            <div class="chatcontent" id="chatcontent" style="padding: 3px;">
+                <p><span id="chat"></span></p>
+            </div>
+            <div class="chatinput" id="chatinput">
+                <input
+                    type="text"
+                    id="author"
+                    class="messageinput"
+                    required
+                    minlength="1"
+                    maxlength="16"
+                    placeholder="Pseudo"
+                    size="8"
+                />
+                <input
+                    type="text"
+                    id="content"
+                    class="messageinput"
+                    required
+                    minlength="1"
+                    maxlength="200"
+                    placeholder="Message"
+                    size="20"
+                />
+                <button onclick="sendmessage()" class="sendbutton">Envoyer</button>
+                <p><span id="chaterror"></span></p>
+            </div>
+            <script src="scripts/socketio.js"></script>
+            <script src="scripts/toggleChat.js?v=0.2"></script>
+            <script src="scripts/chat.js?v=1.8"></script>
+        </div>
+	<p>Me contacter : <a href="mailto:zevier@zevier.fr">zevier@zevier.fr</a> !</p>
+    </body>
+</html>
