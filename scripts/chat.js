@@ -1,6 +1,10 @@
 const chat = document.getElementById('chat');
 let messages = {};
 let oldestmessage = -1;
+let loading = false;
+const contentInput = document.getElementById("content");
+const pseudoInput = document.getElementById("author");
+let admin = false;
 
 function formatChatDate(isoDate) {
     const locale = navigator.language || "en-US";
@@ -38,14 +42,28 @@ function formatChatDate(isoDate) {
     return `${dateShort} ${time}`;
 }
 
+pseudoInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        contentInput.focus();
+    }
+});
+
+contentInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        sendmessage();
+    }
+});
+
 const socket = io("https://msg.zevier.fr", {
-  transports: ["websocket", "polling"],
-  withCredentials: true,
-  reconnection: true,
-  reconnectionAttempts: 50,
-  reconnectionDelay: 50,
-  reconnectionDelayMax: 100,
-  timeout: 20000
+    transports: ["websocket", "polling"],
+    withCredentials: true,
+    reconnection: true,
+    reconnectionAttempts: 50,
+    reconnectionDelay: 50,
+    reconnectionDelayMax: 100,
+    timeout: 20000
 });
 
 // Recevoir les messages existants
@@ -54,13 +72,28 @@ socket.on("init", msgs => getmessages(msgs));
 // Recevoir un nouveau message
 socket.on("newMessage", msg => getmessages([msg]));
 
+// Supprimer un message
+socket.on("deleteMessage", id => deletemessage(id));
+
 // Mettre les anciens messages
-socket.on("oldMessages", msgs => getmessages(msgs, true));
+socket.on("oldMessages", msgs => {
+    getmessages(msgs, true);
+    loading = false;
+});
+
+socket.on("loggedAsAdmin", () => {
+    admin = true;
+    Object.keys(messages).forEach(messageid => {
+        const line = document.getElementById(String(messageid));
+
+        line.childNodes[0].hidden = !admin;
+    });
+})
 
 function senderror(errortext) {
     if(typeof(errortext) === "number"){
-            if(errortext === 0){
-                const first = chat.firstElementChild;
+        if(errortext === 0){
+            const first = chat.firstElementChild;
 
             if (!first || first.textContent !== "Début de la discussion.") {
                 const line = document.createElement("h3");
@@ -78,12 +111,12 @@ function senderror(errortext) {
     }
 }
 
-document.getElementById("content").addEventListener("keydown", function (e) {
-    if (e.key === "Enter") {
-        e.preventDefault();
-        sendmessage();
-    }
-});
+function deletemessage(messageid){
+    if(!messages[messageid]) return;
+    const line = document.getElementById(String(messageid));
+    line.remove();
+    delete messages[messageid];
+}
 
 function getmessages(response, old = false) {
     if(!old) response.reverse();
@@ -95,12 +128,33 @@ function getmessages(response, old = false) {
         if (!messages[message.id]) {
             const line = document.createElement("div");
             const dateSpan = document.createElement("span");
+            const idSpan = document.createElement("span");
+
+            idSpan.className = "chat-id";
             dateSpan.className = "chat-date";
             dateSpan.dataset.date = message.date;
             dateSpan.textContent = `[${formatChatDate(message.date)}] `;
-            const content = document.createTextNode(`${message.author} : ${message.content}`);
+
+            const authorSpan = document.createElement("span");
+
+            if(message.admin) authorSpan.className = "admin-author";
+            else authorSpan.className = "chat-author";
+
+            authorSpan.textContent = message.author;
+            idSpan.textContent = `(${message.id}) `;
+            idSpan.hidden = !admin;
+
+            const separator = document.createTextNode(" : ");
+
+            const content = document.createTextNode(message.content);
+
+            line.appendChild(idSpan);
             line.appendChild(dateSpan);
+            line.appendChild(authorSpan);
+            line.appendChild(separator);
             line.appendChild(content);
+
+            line.setAttribute("id", String(message.id));
 
             if(old){
                 chat.prepend(line);
@@ -110,12 +164,15 @@ function getmessages(response, old = false) {
             }
 
             messages[message.id] = true;
-            if(oldestmessage != -1){
-                if(Number(message.id) < oldestmessage) oldestmessage = Number(message.id);
+            if(message.id > 0){
+                if(oldestmessage != -1){
+                    if(Number(message.id) < oldestmessage) oldestmessage = Number(message.id);
+                }
+                else {
+                    oldestmessage = Number(message.id);
+                }
             }
-            else {
-                oldestmessage = Number(message.id);
-            }
+
             lastNewLine = line;
         }
     });
@@ -146,7 +203,7 @@ function sendmessage() {
     }
 
     socket.emit("sendMessage", {author, content});
-    
+
     document.getElementById('content').value = "";
 }
 
@@ -163,7 +220,7 @@ function chatSave() {
 function chatLoad() {
     const raw = localStorage.getItem("chatSave");
     if (!raw) return;
-    
+
     const save = JSON.parse(raw);
 
     document.getElementById("author").value = save.pseudo;
@@ -192,7 +249,8 @@ chatcontent.addEventListener("scroll", () => {
     if (chatcontent.scrollTop <= 100) {
         const first = chat.firstElementChild;
 
-        if (!!first && first.textContent !== "Début de la discussion.") {
+        if (!!first && first.textContent !== "Début de la discussion." && !loading) {
+            loading = true
             socket.emit("getMessages", {id: oldestmessage});
         }
     }
