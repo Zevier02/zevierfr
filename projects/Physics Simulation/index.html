@@ -2,7 +2,7 @@
 <html lang="fr">
     <head>
         <link rel="icon" type="image/png" sizes="16x16" href="../../images/logo.png">
-        <link rel="stylesheet" href="../../ressources/style.css?v=1.4">
+        <link rel="stylesheet" href="../../ressources/style.css?v=1.5">
         <link rel="stylesheet" href="ressources/style.css?v=2.0">
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -97,6 +97,7 @@
                     maxlength="16"
                     placeholder="Pseudo"
                     size="8"
+                    enterkeyhint="next"
                 />
                 <input
                     type="text"
@@ -107,13 +108,14 @@
                     maxlength="200"
                     placeholder="Message"
                     size="20"
+                    enterkeyhint="send"
                 />
                 <button onclick="sendmessage()" class="sendbutton">Envoyer</button>
                 <p><span id="chaterror"></span></p>
             </div>
             <script src="../../scripts/socketio.js"></script>
             <script src="../../scripts/toggleChat.js?v=0.2"></script>
-            <script src="../../scripts/chat.js?v=1.8"></script>
+            <script src="../../scripts/chat.js?v=4.6"></script>
         </div>
         <script src="scripts/physics.js?v=0.221"></script>
     </body>
