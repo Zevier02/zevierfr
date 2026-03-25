@@ -181,11 +181,13 @@ function getmessages(response, old = false) {
         const newScrollHeight = chatcontent.scrollHeight;
         chatcontent.scrollTop = previousScrollTop + (newScrollHeight - previousScrollHeight);
     }
-    else if(first && !!lastNewLine){
-        lastNewLine.scrollIntoView({ behavior: "auto" });
-    }
-    else if (!!lastNewLine && !old) {
-        lastNewLine.scrollIntoView({ behavior: "smooth" });
+    else if(!!lastNewLine && chatcontent.scrollHeight - chatcontent.clientHeight - chatcontent.scrollTop < 300){
+        if(first){
+            lastNewLine.scrollIntoView({ behavior: "auto" });
+        }
+        else if (!old) {
+            lastNewLine.scrollIntoView({ behavior: "smooth" });
+        }
     }
 }
 
