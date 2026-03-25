@@ -83,11 +83,21 @@ socket.on("oldMessages", msgs => {
 
 socket.on("loggedAsAdmin", () => {
     admin = true;
+    const lastScrollTop = chatcontent.scrollTop;
+    const toScroll = chatcontent.scrollHeight - chatcontent.clientHeight - lastScrollTop < 300
     Object.keys(messages).forEach(messageid => {
         const line = document.getElementById(String(messageid));
 
         line.childNodes[0].hidden = !admin;
     });
+    
+    chatcontent.scrollTop = lastScrollTop;
+    if(toScroll){
+        chatcontent.scrollTo({
+            top: chatcontent.scrollHeight,
+            behavior: "smooth"
+        });
+    }
 })
 
 function senderror(errortext) {
