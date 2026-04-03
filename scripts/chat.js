@@ -2,6 +2,7 @@ const chat = document.getElementById('chat');
 let messages = {};
 let oldestmessage = -1;
 let loading = false;
+let firstMessagesLoaded = false;
 const contentInput = document.getElementById("content");
 const pseudoInput = document.getElementById("author");
 let admin = false;
@@ -187,17 +188,16 @@ function getmessages(response, old = false) {
         }
     });
 
-    if (old) {
+    if(!firstMessagesLoaded){
+        chatcontent.scrollTop = chatcontent.scrollHeight;
+        firstMessagesLoaded = true
+    }
+    else if (old) {
         const newScrollHeight = chatcontent.scrollHeight;
         chatcontent.scrollTop = previousScrollTop + (newScrollHeight - previousScrollHeight);
     }
-    else if(!!lastNewLine && chatcontent.scrollHeight - chatcontent.clientHeight - chatcontent.scrollTop < 300){
-        if(first){
-            lastNewLine.scrollIntoView({ behavior: "auto" });
-        }
-        else if (!old) {
-            lastNewLine.scrollIntoView({ behavior: "smooth" });
-        }
+    else if(!!lastNewLine && (chatcontent.scrollHeight - chatcontent.clientHeight - chatcontent.scrollTop < 300 || first)){
+        lastNewLine.scrollIntoView({ behavior: "smooth" });
     }
 }
 
