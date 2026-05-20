@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <link rel="icon" type="image/png" sizes="16x16" href="../../images/logo.png">
+        <link rel="stylesheet" href="../../ressources/style.css?v=1.5">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ZevierImage</title>
+        <script>console.info("T'utilises inspecter sérieux ?");</script>
+    </head>
+    <body>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>./<img src="../../images/boldlogo.png" title="Z" style="height: 1em; vertical-align: -0.15em;">evier</h1>
+            <div style="display: flex; align-items: center; gap: 1em;">
+                <a href="../../">Back</a>
+                <img src="../../images/logo.png" title="logo" style="height: 5em;">
+            </div>
+        </div>
+        
+        <h1>ZevierImage : Le format d'image brut, sans compression.</h1>
+        <h2>Convertir en ZevierImage</h2>
+
+        <label for="fileInput">Fichier à convertir : </label>
+        <input type="file" id="fileInput" accept="image/*" />
+        <br>
+        <label for="cryptKeyInput">Mot de passe de chiffrement (laisser vide pour ne pas chiffrer) : </label>
+        <input type="password" id="cryptKeyInput" placeholder="Mot de passe" size="20">
+        <button id="cryptKeyInputtoggleBtn" style="display: inline;">Afficher</button>
+        <br>
+        <canvas id="canvas"></canvas>
+        <br>
+        <p><span id="convertStatus"></span></p>
+        <button id="convertButton">Convertir</button>
+        <button id="downloadBtn">Télécharger</button>
+
+
+        <br><br>
+        <h2>Lire et Convertir depuis un ZevierImage</h2>
+        <br>
+        <label for="fileOutput">Fichier à lire : </label>
+        <input type="file" id="fileOutput" accept=".ZevierImage" />
+        <br>
+        <label for="cryptKeyOutput">Mot de passe de chiffrement (laisser vide si aucun mot de passe) : </label>
+        <input type="password" id="cryptKeyOutput" placeholder="Mot de passe" size="20">
+        <button id="cryptKeyOutputtoggleBtn" style="display: inline;">Afficher</button>
+        <br>
+        <canvas id="outputCanvas"></canvas>
+        <br>
+        <p><span id="readStatus"></span></p>
+        <button id="readButton">Lire</button>
+        <button id="downloadOutputBtn">Télécharger (PNG)</button>
+
+        <script src="./scripts/code.js?v=2.2"></script>
+        <script src="./scripts/decode.js?v=2.2"></script>
+
+
+
+        <!-- BOUTON POUR MASQUER / AFFICHER LE CHAT -->
+        <button onclick="toggleChat()" id="toggleChat" style="background-color: grey;">Masquer le chat</button>
+        <div class="chatbox" id="chatbox" style="height: 45%;">
+            <div class="chattitle" id="chattitle">
+                <p>Discussion en direct</p>
+            </div>
+            <div class="chatcontent" id="chatcontent" style="padding: 3px;">
+                <p><span id="chat"></span></p>
+            </div>
+            <div class="chatinput" id="chatinput">
+                <input
+                    type="text"
+                    id="author"
+                    class="messageinput"
+                    required
+                    minlength="1"
+                    maxlength="16"
+                    placeholder="Pseudo"
+                    size="8"
+                    enterkeyhint="next"
+                />
+                <input
+                    type="text"
+                    id="content"
+                    class="messageinput"
+                    required
+                    minlength="1"
+                    maxlength="200"
+                    placeholder="Message"
+                    size="20"
+                    enterkeyhint="send"
+                />
+                <button onclick="sendmessage()" class="sendbutton">Envoyer</button>
+                <p><span id="chaterror"></span></p>
+            </div>
+            <script src="../../scripts/socketio.js"></script>
+            <script src="../../scripts/toggleChat.js?v=0.2"></script>
+            <script src="../../scripts/chat.js?v=4.9"></script>
+    </body>
+</html>
